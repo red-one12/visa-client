@@ -39,7 +39,7 @@ const Header = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
             <NavLink to='/'>Home</NavLink>
-            <NavLink to='/allVisas'>All Visas</NavLink>
+            <NavLink to='/allVisa'>All Visas</NavLink>
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">VISA</a>
@@ -47,7 +47,16 @@ const Header = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="flex gap-10">
           <NavLink to='/'>Home</NavLink>
-          <NavLink to='/allVisas'>All Visas</NavLink>
+          <NavLink to='/allVisa'>All Visas</NavLink>
+          {
+            user && <NavLink to='/addVisa'>Add Visa</NavLink>
+          }
+          {
+            user && <NavLink to='/myAddedVisa'>My Added Visa</NavLink>
+          }
+          {
+            user && <NavLink to='myVisaApplication'>My Visa applications</NavLink>
+          }
         </ul>
       </div>
       <div className="navbar-end flex gap-8">

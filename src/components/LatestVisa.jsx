@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const visaData = [
   {
@@ -59,8 +60,8 @@ const visaData = [
 
 const LatestVisa = () => {
   return (
-    <div className="p-6 bg-gray-100">
-      <h2 className="text-2xl font-bold mb-6">Latest Visas</h2>
+    <div className="p-6 bg-gray-100 mt-16">
+      <h2 className="text-5xl font-bold mb-6 text-center">Latest Visas</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {visaData.map((visa, index) => (
           <div key={index} className="card bg-white shadow-lg rounded-lg overflow-hidden">
@@ -72,11 +73,14 @@ const LatestVisa = () => {
               <p><strong>Fee:</strong> {visa.fee}</p>
               <p><strong>Validity:</strong> {visa.validity}</p>
               <p><strong>Application Method:</strong> {visa.applicationMethod}</p>
-              <button className="mt-4 btn btn-primary w-full">See Details</button>
+              <button className="mt-4 btn bg-[#080221] w-full text-white">See Details</button>
             </div>
           </div>
         ))}
       </div>
+      <div className='flex justify-center mt-10'><button className='btn bg-[#080221] text-white'>
+        <Link to='/allVisa'>See All Visas</Link>
+        </button></div>
     </div>
   );
 };

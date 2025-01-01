@@ -27,49 +27,118 @@ const Header = () => {
               className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16" />
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
             </svg>
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            <NavLink to='/'>Home</NavLink>
-            <NavLink to='/allVisa'>All Visas</NavLink>
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow text-black"
+          >
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/allVisa">All Visas</NavLink>
+            </li>
+            {user && (
+              <li>
+                <NavLink to="/addVisa">Add Visa</NavLink>
+              </li>
+            )}
+            {user && (
+              <li>
+                <NavLink to="/myAddedVisa">My Added Visa</NavLink>
+              </li>
+            )}
+            {user && (
+              <li>
+                <NavLink to="myVisaApplication">My Visa Applications</NavLink>
+              </li>
+            )}
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">VISA</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="flex gap-10">
-          <NavLink to='/'>Home</NavLink>
-          <NavLink to='/allVisa'>All Visas</NavLink>
-          {
-            user && <NavLink to='/addVisa'>Add Visa</NavLink>
-          }
-          {
-            user && <NavLink to='/myAddedVisa'>My Added Visa</NavLink>
-          }
-          {
-            user && <NavLink to='myVisaApplication'>My Visa applications</NavLink>
-          }
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? "underline" : "")}
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/allVisa"
+              className={({ isActive }) => (isActive ? "underline" : "")}
+            >
+              All Visas
+            </NavLink>
+          </li>
+          {user && (
+            <li>
+              <NavLink
+                to="/addVisa"
+                className={({ isActive }) => (isActive ? "underline" : "")}
+              >
+                Add Visa
+              </NavLink>
+            </li>
+          )}
+          {user && (
+            <li>
+              <NavLink
+                to="/myAddedVisa"
+                className={({ isActive }) => (isActive ? "underline" : "")}
+              >
+                My Added Visa
+              </NavLink>
+            </li>
+          )}
+          {user && (
+            <li>
+              <NavLink
+                to="myVisaApplication"
+                className={({ isActive }) => (isActive ? "underline" : "")}
+              >
+                My Visa Applications
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
       <div className="navbar-end flex gap-8">
         {user ? (
           <div className="flex items-center gap-4">
-            {user.photoURL && <img src={user.photoURL} alt="User" className="w-10 h-10 rounded-full" />}
-            <span>{user.displayName}</span>
-            <button onClick={handleLogout} className="btn">Logout</button>
+            {user.photoURL && (
+              <div className="relative group">
+                <img
+                  src={user.photoURL}
+                  alt="User"
+                  className="w-10 h-10 rounded-full"
+                />
+                <div className="absolute mt-4 hidden w-max bg-[#17073ec9] text-white text-xs rounded-full py-1 px-2 group-hover:block">
+                  {user.displayName}
+                </div>
+              </div>
+            )}
+            <button onClick={handleLogout} className="btn">
+              Logout
+            </button>
           </div>
         ) : (
           <>
-            <NavLink to='/login'>Login</NavLink>
-            <NavLink to='/register'>Register</NavLink>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/register">Register</NavLink>
           </>
         )}
       </div>

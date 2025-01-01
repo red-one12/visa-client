@@ -1,7 +1,32 @@
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import { FaGoogle } from "react-icons/fa";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import auth from "../firebase/firebase.init";
+import { useNavigate } from "react-router-dom";
 
 
 const Register = () => {
 
+
+  const {createNewUser} = useContext(AuthContext);
+
+  const navigateToHome = useNavigate();
+
+
+
+  const googleProvider = new GoogleAuthProvider();
+
+  const handleGoogleRegister = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        console.log(result.user);
+        navigateToHome('/');
+      })
+      .catch(error => {
+        console.log('Error', error);
+      });
+  };
 
   const handleRegistration = (e) => {
     e.preventDefault();
@@ -11,13 +36,31 @@ const Register = () => {
     const photoURL = form.photoURL.value;
     const password = form.password.value;
 
-    console.log(name, email, photoURL, password);
+    // console.log(name, email, photoURL, password);
+
+
+    createNewUser(email, password)
+    .then(result => {
+      console.log(result.user);
+      navigateToHome('/');
+    })
+    .catch(error => {
+      console.log('error', error);
+    })
     
   }
   return (
     <div>
       <h1 className='text-center font-bold text-5xl'>Registration</h1>
 
+
+
+      <div className="text-center">
+      <p>Registration with</p>
+      <button onClick={handleGoogleRegister} className="btn bg-blue-500"><FaGoogle /></button>
+      </div>
+
+      <div className="divider">OR</div>
 
 
       <div className="">

@@ -10,7 +10,7 @@ const Register = () => {
   const googleProvider = new GoogleAuthProvider();
   const { createNewUser, setUser } = useContext(AuthContext);
 
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [isManual, setIsManual] = useState(true);
 
   const handleGoogleRegister = () => {
@@ -23,7 +23,7 @@ const Register = () => {
       })
       .catch((error) => {
         console.error('Error', error);
-        setError(error.message);
+        setErrorMessage(error.message);
         setUser(null);
       });
   };
@@ -36,10 +36,21 @@ const Register = () => {
     const password = form.password.value;
     const photoURL = form.photoURL.value;
 
+    // Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (password.length < 6) {
+      setErrorMessage('Password should be 6 characters or more!');
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      setErrorMessage('Password must contain at least one uppercase letter, one lowercase letter, and be at least 6 characters long.');
+      return;
+    }
+    setErrorMessage('');
+
     createNewUser(email, password)
       .then((result) => {
         const user = result.user;
-        // Update profile with name and photoURL
         return updateProfile(user, {
           displayName: name,
           photoURL: photoURL
@@ -49,8 +60,8 @@ const Register = () => {
         });
       })
       .catch((error) => {
-        console.error('error', error);
-        setError(error.message);
+        console.error('Error', error);
+        setErrorMessage(error.message);
       });
   };
 
@@ -58,7 +69,7 @@ const Register = () => {
     <div>
       <h1 className='text-center font-bold text-5xl'>Registration</h1>
       <div className="text-center">
-        <p>Registration with</p>
+        <p>Register with</p>
         <button onClick={handleGoogleRegister} className="btn bg-blue-500">
           <FaGoogle />
         </button>
@@ -66,7 +77,7 @@ const Register = () => {
       <div className="divider">OR</div>
       <div className="">
         <form onSubmit={handleRegistration} className="card-body">
-          {error && <p className="text-red-500">{error}</p>}
+          
           <div className="form-control">
             <label className="label">
               <span className="label-text">Name</span>
@@ -93,6 +104,7 @@ const Register = () => {
             </label>
             <input type="password" placeholder="password" name="password" className="input input-bordered" required />
           </div>
+          {errorMessage && <p className="text-red-500 text-[12px]">{errorMessage}</p>}
           <div className="form-control mt-6">
             <button className="btn btn-primary">Register</button>
           </div>

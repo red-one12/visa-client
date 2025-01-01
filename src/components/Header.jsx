@@ -1,12 +1,20 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import { signOut } from "firebase/auth";
+import auth from "../firebase/firebase.init";
 
 const Header = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const handleLogout = () => {
-    logout();
+    signOut(auth)
+      .then(() => {
+        setUser(null);
+      })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
   };
 
   return (
@@ -44,11 +52,11 @@ const Header = () => {
       </div>
       <div className="navbar-end flex gap-8">
         {user ? (
-          <>
-            <img src={user.photoURL} alt={user.displayName} className="w-10 h-10 rounded-full" />
+          <div className="flex items-center gap-4">
+            {user.photoURL && <img src={user.photoURL} alt="User" className="w-10 h-10 rounded-full" />}
             <span>{user.displayName}</span>
             <button onClick={handleLogout} className="btn">Logout</button>
-          </>
+          </div>
         ) : (
           <>
             <NavLink to='/login'>Login</NavLink>

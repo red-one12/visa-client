@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
 import auth from "../firebase/firebase.init";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +11,7 @@ const Register = () => {
   const { createNewUser, setUser } = useContext(AuthContext);
 
   const [error, setError] = useState("");
+  const [isManual, setIsManual] = useState(true);
 
   const handleGoogleRegister = () => {
     signInWithPopup(auth, googleProvider)
@@ -18,6 +19,7 @@ const Register = () => {
         console.log(result.user);
         setUser(result.user);
         navigateToHome('/');
+        setIsManual(false);
       })
       .catch((error) => {
         console.error('Error', error);
@@ -31,14 +33,20 @@ const Register = () => {
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
-    const photoURL = form.photoURL.value;
     const password = form.password.value;
+    const photoURL = form.photoURL.value;
 
     createNewUser(email, password)
       .then((result) => {
-        console.log(result.user);
-        setUser(result.user);  // Use the setUser from AuthContext
-        navigateToHome('/');
+        const user = result.user;
+        // Update profile with name and photoURL
+        return updateProfile(user, {
+          displayName: name,
+          photoURL: photoURL
+        }).then(() => {
+          setUser(user);
+          navigateToHome('/');
+        });
       })
       .catch((error) => {
         console.error('error', error);
@@ -71,12 +79,14 @@ const Register = () => {
             </label>
             <input type="email" placeholder="email" name="email" className="input input-bordered" required />
           </div>
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Photo URL</span>
-            </label>
-            <input type="text" placeholder="Photo URL" name="photoURL" className="input input-bordered" required />
-          </div>
+          {isManual && (
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Photo URL</span>
+              </label>
+              <input type="text" placeholder="Photo URL" name="photoURL" className="input input-bordered" required />
+            </div>
+          )}
           <div className="form-control">
             <label className="label">
               <span className="label-text">Password</span>

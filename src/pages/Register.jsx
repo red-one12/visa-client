@@ -3,7 +3,7 @@ import { AuthContext } from "../provider/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
 import { GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
 import auth from "../firebase/firebase.init";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigateToHome = useNavigate();
@@ -108,6 +108,7 @@ const Register = () => {
           <div className="form-control mt-6">
             <button className="btn btn-primary">Register</button>
           </div>
+          <p className='text-gray-500 text-sm text-end'>Already have an account? <Link to='/login' className='text-blue-500'>Login</Link></p>
         </form>
       </div>
     </div>

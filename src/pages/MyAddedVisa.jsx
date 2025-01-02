@@ -5,14 +5,13 @@ import { AuthContext } from "../provider/AuthProvider";
 const MyAddedVisa = () => {
   const userAddedVisa = useLoaderData();
   const { user } = useContext(AuthContext);
+  const [visas, setVisas] = useState(userAddedVisa.filter((visa) => visa.email === user.email));
   const [selectedVisa, setSelectedVisa] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!user) {
     return <div>Loading...</div>;
   }
-
-  const userVisas = userAddedVisa.filter((visa) => visa.email === user.email);
 
   const handleUpdateVisa = (e) => {
     e.preventDefault();
@@ -46,23 +45,35 @@ const MyAddedVisa = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setVisas(visas.map((visa) => (visa._id === selectedVisa._id ? { ...visa, ...updateVisa } : visa)));
         setIsModalOpen(false);
-        // Optionally, you can refresh the data here or handle state update to reflect changes
       })
       .catch((error) => {
         console.error("Error updating visa:", error);
       });
   };
 
+  const handleDeleteVisa = (id) => {
+    fetch(`http://localhost:5000/visa/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setVisas(visas.filter((visa) => visa._id !== id));
+      })
+      .catch((error) => {
+        console.error("Error deleting visa:", error);
+      });
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-center text-3xl font-bold mb-6">
-        The number of visas you added: {userVisas.length}
+        The number of visas you added: {visas.length}
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {userVisas.map((visa) => (
+        {visas.map((visa) => (
           <div key={visa._id} className="visa-card p-4 border rounded-lg shadow-lg">
             <img
               src={visa.countryImage}
@@ -98,7 +109,12 @@ const MyAddedVisa = () => {
                 Update
               </button>
 
-              <button className="btn bg-red-500 text-white">Delete</button>
+              <button
+                onClick={() => handleDeleteVisa(visa._id)}
+                className="btn bg-red-500 text-white"
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}

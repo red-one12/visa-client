@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
@@ -83,7 +83,7 @@ const ViewDetails = () => {
           <strong>Age Restriction:</strong> {ageRestriction}
         </p>
         <p className="text-gray-700 mb-2">
-          <strong>Required Documents:</strong> {requiredDocuments.join(", ")}
+          <strong>Required Documents:</strong> {requiredDocuments && Array.isArray(requiredDocuments) ? requiredDocuments.join(", ") : "N/A"}
         </p>
 
         <div className="flex justify-center">

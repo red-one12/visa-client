@@ -1,8 +1,10 @@
-import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
 
 const AllVisa = () => {
   const allVisa = useLoaderData();
+  const {user} = useContext(AuthContext);
 
   return (
     <div className="p-6 bg-gray-100">
@@ -21,9 +23,16 @@ const AllVisa = () => {
               <p className="text-gray-700 mb-1">Processing Time: {visa.processingTime}</p>
               <p className="text-gray-700 mb-1">Fee: {visa.fee}</p>
 
-          
 
-              <button className="mt-4 w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">See Details</button>
+              <Link to={user? `/viewDetails/${visa._id}`: `/login`}>
+              <button className="mt-4 w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+
+                
+              See Details
+
+              </button>
+              
+                </Link>
             </div>
           </div>
         ))}

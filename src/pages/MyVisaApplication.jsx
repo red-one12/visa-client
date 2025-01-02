@@ -1,9 +1,12 @@
 import React from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 const MyVisaApplication = () => {
+  const myVisaApplication = useLoaderData();
   return (
     <div>
-      hello from my visa application
+      <p>Total Application of VISA: {myVisaApplication.length}</p>
+      
     </div>
   );
 };

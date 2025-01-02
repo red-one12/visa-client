@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../provider/AuthProvider';
 
 const AddVisa = () => {
   const visaTypes = ['Tourist visa', 'Student visa', 'Official visa'];
   const documents = ['Valid passport', 'Visa application form', 'Recent passport-sized photograph'];
+
+  const {user} = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +25,7 @@ const AddVisa = () => {
     const fee = form.fee.value;
     const validity = form.validity.value;
     const applicationMethod = form.applicationMethod.value;
+    const email = form.email.value;
 
     // Create newVisa object
     const newVisa = {
@@ -34,7 +38,8 @@ const AddVisa = () => {
       ageRestriction,
       fee,
       validity,
-      applicationMethod
+      applicationMethod,
+      email
     };
 
     console.log(newVisa);
@@ -157,6 +162,16 @@ const AddVisa = () => {
             name="applicationMethod"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             placeholder="Enter application method"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            type="text"
+            name="email"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            defaultValue={user.email}
+            readOnly
           />
         </div>
         <div>

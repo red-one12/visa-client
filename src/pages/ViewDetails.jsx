@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
 const ViewDetails = () => {
   const singleVisa = useLoaderData();
   const { user } = useContext(AuthContext);
+  const modalRef = useRef(null);
   const {
     countryName,
     countryImage,
@@ -19,6 +20,37 @@ const ViewDetails = () => {
   } = singleVisa;
 
   const currentDate = new Date().toISOString().split("T")[0];
+
+  const handleApplyForm = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const firstName = form.firstName.value;
+    const lastName = form.lastName.value;
+    const fee = form.fee.value;
+    const date = form.date.value;
+
+    const newApplication = { email, firstName, lastName, fee, date };
+    console.log(newApplication);
+
+    fetch('http://localhost:5000/application', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(newApplication)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if(data.insertedId){
+        alert("Application Successful!!!")
+      }
+    })
+
+    // Close the modal
+    modalRef.current.close();
+  };
 
   return (
     <div className="p-6 bg-gray-100">
@@ -57,15 +89,15 @@ const ViewDetails = () => {
         <div className="flex justify-center">
           <button
             className="btn bg-[#080221] text-white"
-            onClick={() => document.getElementById("my_modal_4").showModal()}
+            onClick={() => modalRef.current.showModal()}
           >
             Apply for the visa
           </button>
         </div>
 
-        <dialog id="my_modal_4" className="modal">
+        <dialog id="my_modal_4" className="modal" ref={modalRef}>
           <div className="modal-box w-11/12 max-w-5xl">
-            <form method="dialog">
+            <form onSubmit={handleApplyForm} method="dialog">
               <h3 className="text-2xl font-bold mb-4">Visa Application Form</h3>
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2">
@@ -74,6 +106,7 @@ const ViewDetails = () => {
                 <input
                   type="email"
                   value={user?.email || ""}
+                  name="email"
                   readOnly
                   className="w-full p-2 border border-gray-300 rounded"
                 />
@@ -107,6 +140,7 @@ const ViewDetails = () => {
                 <input
                   type="date"
                   value={currentDate}
+                  name="date"
                   readOnly
                   className="w-full p-2 border border-gray-300 rounded"
                 />
@@ -118,6 +152,7 @@ const ViewDetails = () => {
                 <input
                   type="text"
                   value={fee}
+                  name="fee"
                   readOnly
                   className="w-full p-2 border border-gray-300 rounded"
                 />

@@ -40,9 +40,22 @@ const AddVisa = () => {
     console.log(newVisa);
 
 
+    fetch('http://localhost:5000/visa', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(newVisa)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if(data.insertedId){
+        alert("successfully added");
+      }
+    })
 
 
-    
   };
 
   return (

@@ -61,7 +61,7 @@ const visaData = [
 const LatestVisa = () => {
   return (
     <div className="p-6 bg-gray-100 mt-16">
-      <h2 className="text-5xl font-bold mb-6 text-center">Latest Visas</h2>
+      <h2 className="text-5xl font-bold mb-6 text-center text-blue-900">Latest Visas</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {visaData.map((visa, index) => (
           <div key={index} className="card bg-white shadow-lg rounded-lg overflow-hidden">

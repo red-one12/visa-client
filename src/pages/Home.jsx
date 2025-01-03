@@ -20,7 +20,7 @@ const Home = () => {
     <div className={`min-h-screen ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
       <button
   onClick={toggleTheme}
-  className="absolute top-4 right-40 bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+  className="absolute top-4 right-4 bg-indigo-600 text-white py-2 px-1 text-sm rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 >
   {theme === "dark" ? "Light Mode" : "Dark Mode"}
 </button>

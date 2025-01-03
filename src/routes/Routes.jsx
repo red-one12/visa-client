@@ -12,6 +12,7 @@ import AllVisa from "../pages/AllVisa";
 import MyAddedVisa from "../pages/MyAddedVisa";
 import MyVisaApplication from "../pages/MyVisaApplication";
 import ViewDetails from "../pages/ViewDetails";
+import ErrorPage from "../pages/ErrorPage";
 
 
 
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: '/',

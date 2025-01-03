@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import { signOut } from "firebase/auth";
 import auth from "../firebase/firebase.init";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const Header = () => {
   const { user, setUser } = useContext(AuthContext);
@@ -16,9 +18,6 @@ const Header = () => {
         console.error("Error logging out:", error);
       });
   };
-
- 
-  
 
   return (
     <div className="navbar bg-[#080221] text-white">
@@ -70,7 +69,7 @@ const Header = () => {
         <a className="btn btn-ghost text-xl">VISA</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="flex gap-10">
+        <ul className="flex gap-8">
           <li>
             <NavLink
               to="/"
@@ -128,13 +127,13 @@ const Header = () => {
                   src={user.photoURL}
                   alt="User"
                   className="w-10 h-10 rounded-full"
+                  data-tooltip-id="user-tooltip"
+                  data-tooltip-content={user.displayName || "User"}
                 />
-                <div className="absolute mt-4 hidden w-max bg-[#17073ec9] text-white text-xs rounded-full py-1 px-2 group-hover:block">
-                  {user.displayName}
-                </div>
+                <Tooltip id="user-tooltip" place="left" />
               </div>
             )}
-            <button onClick={handleLogout} className="btn">
+            <button onClick={handleLogout} className="btn mr-24">
               Logout
             </button>
           </div>

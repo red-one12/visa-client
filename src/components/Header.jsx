@@ -74,7 +74,7 @@ const Header = () => {
             )}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">VISA</a>
+        <a className="btn btn-ghost md:text-xl sm:text-sm">VISA</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="flex gap-8">
@@ -146,7 +146,7 @@ const Header = () => {
             </button>
           </div>
         ) : (
-          <div className="mr-32 flex gap-5">
+          <div className="mr-32 flex gap-5 md:text-lg text-sm">
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/register">Register</NavLink>
           </div>

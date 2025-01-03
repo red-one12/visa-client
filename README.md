@@ -1,8 +1,21 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Visa
+Link of live site:
 
-Currently, two official plugins are available:
+# Purpose
+The purpose of this project is to create a visa management platform where users can explore visa options, understand the application process, and access key features like dark mode for a better user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Key Features
+1. **Visa Exploration**: View detailed visa options and requirements.  
+2. **Application Management**: Add, track, and manage visa applications.  
+3. **User Authentication**: Secure login and personalized dashboard.  
+4. **Dark Mode**: Switch between light and dark themes.  
+5. **Responsive Design**: Optimized for all devices.
+
+# NPM Package That I have use
+**react-simple-typewriter:** For showing typeing animations.
+**react-tooltip:** For showing data by hover effect.
+
+
+
+

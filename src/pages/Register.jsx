@@ -120,7 +120,9 @@ const Register = () => {
             </label>
             <input type="password" placeholder="password" name="password" className="input input-bordered" required />
           </div>
-          
+          {errorMessage && (
+    <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+  )}
           <div className="form-control mt-6">
             <button className="btn btn-primary">Register</button>
           </div>

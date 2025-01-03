@@ -1,10 +1,30 @@
+import React, { useState, useEffect } from "react";
 import FeaturedVisas from "../components/FeaturedVisas";
 import LatestVisa from "../components/LatestVisa";
 import VisaApplicationProcess from "../components/VisaApplicationProcess";
 
 const Home = () => {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
+
+  useEffect(() => {
+    document.documentElement.className = theme;
+  }, [theme]);
+
   return (
-    <div>
+    <div className={`min-h-screen ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
+      <button
+  onClick={toggleTheme}
+  className="absolute top-4 right-40 bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+>
+  {theme === "dark" ? "Light Mode" : "Dark Mode"}
+</button>
+
       <div className="carousel w-full">
         <div id="item1" className="carousel-item w-full h-[500px] relative">
           <img
@@ -76,13 +96,13 @@ const Home = () => {
       </div>
 
       <div>
-        <LatestVisa></LatestVisa>
+        <LatestVisa />
       </div>
       <div>
-        <FeaturedVisas></FeaturedVisas>
+        <FeaturedVisas />
       </div>
       <div>
-        <VisaApplicationProcess></VisaApplicationProcess>
+        <VisaApplicationProcess />
       </div>
     </div>
   );

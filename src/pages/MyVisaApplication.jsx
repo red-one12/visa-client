@@ -1,43 +1,35 @@
-import React, { useContext, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { AuthContext } from '../provider/AuthProvider';
-import Swal from 'sweetalert2';
+import React, { useContext, useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const MyVisaApplication = () => {
   const userApplications = useLoaderData();
   const { user } = useContext(AuthContext);
 
-
-
-
-
-
-
-
   const [applications, setApplications] = useState(
     userApplications.filter((application) => application.email === user.email)
   );
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleCancel = (_id) => {
-    fetch(`http://localhost:5000/application/${_id}`, {
-      method: 'DELETE',
+    fetch(`https://visa-server-chi.vercel.app/application/${_id}`, {
+      method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount > 0) {
-          
           setApplications(applications.filter((app) => app._id !== _id));
 
           Swal.fire({
-                    title: "Application Cancel!!!",
-                    icon: "Error",
-                    draggable: true
-                  });
+            title: "Application Cancel!!!",
+            icon: "Error",
+            draggable: true,
+          });
         }
       })
       .catch((error) => {
-        console.error('Error deleting application:', error);
+        console.error("Error deleting application:", error);
       });
   };
 
@@ -45,7 +37,9 @@ const MyVisaApplication = () => {
     const filtered = userApplications.filter(
       (application) =>
         application.email === user.email &&
-        application.countryName.toLowerCase().includes(searchQuery.toLowerCase())
+        application.countryName
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
     );
     setApplications(filtered);
   };
@@ -53,7 +47,6 @@ const MyVisaApplication = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">My Visa Applications</h1>
-
 
       <div className="mb-6 flex justify-center">
         <input
@@ -83,7 +76,9 @@ const MyVisaApplication = () => {
                 alt={application.countryName}
                 className="w-full h-40 object-cover rounded-md mb-4"
               />
-              <h2 className="text-xl font-semibold">{application.countryName}</h2>
+              <h2 className="text-xl font-semibold">
+                {application.countryName}
+              </h2>
               <p className="text-sm">
                 <strong>Visa Type:</strong> {application.visaType}
               </p>
@@ -97,13 +92,15 @@ const MyVisaApplication = () => {
                 <strong>Validity:</strong> {application.validity}
               </p>
               <p className="text-sm">
-                <strong>Application Method:</strong> {application.applicationMethod}
+                <strong>Application Method:</strong>{" "}
+                {application.applicationMethod}
               </p>
               <p className="text-sm">
                 <strong>Applied Date:</strong> {application.submissionDate}
               </p>
               <p className="text-sm">
-                <strong>Applicant:</strong> {application.firstName} {application.lastName}
+                <strong>Applicant:</strong> {application.firstName}{" "}
+                {application.lastName}
               </p>
               <p className="text-sm">
                 <strong>Email:</strong> {application.email}

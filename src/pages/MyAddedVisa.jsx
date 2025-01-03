@@ -6,7 +6,9 @@ import Swal from "sweetalert2";
 const MyAddedVisa = () => {
   const userAddedVisa = useLoaderData();
   const { user } = useContext(AuthContext);
-  const [visas, setVisas] = useState(userAddedVisa.filter((visa) => visa.email === user.email));
+  const [visas, setVisas] = useState(
+    userAddedVisa.filter((visa) => visa.email === user.email)
+  );
   const [selectedVisa, setSelectedVisa] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -37,7 +39,7 @@ const MyAddedVisa = () => {
       email,
     };
 
-    fetch(`http://localhost:5000/visa/${selectedVisa._id}`, {
+    fetch(`https://visa-server-chi.vercel.app/visa/${selectedVisa._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -46,13 +48,17 @@ const MyAddedVisa = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setVisas(visas.map((visa) => (visa._id === selectedVisa._id ? { ...visa, ...updateVisa } : visa)));
+        setVisas(
+          visas.map((visa) =>
+            visa._id === selectedVisa._id ? { ...visa, ...updateVisa } : visa
+          )
+        );
         setIsModalOpen(false);
         Swal.fire({
-                  title: "Successfully Updated!!!",
-                  icon: "success",
-                  draggable: true
-                });
+          title: "Successfully Updated!!!",
+          icon: "success",
+          draggable: true,
+        });
       })
       .catch((error) => {
         console.error("Error updating visa:", error);
@@ -60,17 +66,17 @@ const MyAddedVisa = () => {
   };
 
   const handleDeleteVisa = (id) => {
-    fetch(`http://localhost:5000/visa/${id}`, {
+    fetch(`https://visa-server-chi.vercel.app/visa/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
         setVisas(visas.filter((visa) => visa._id !== id));
         Swal.fire({
-                  title: "Visa Deleted!!!",
-                  icon: "success",
-                  draggable: true
-                });
+          title: "Visa Deleted!!!",
+          icon: "success",
+          draggable: true,
+        });
       })
       .catch((error) => {
         console.error("Error deleting visa:", error);
@@ -85,7 +91,10 @@ const MyAddedVisa = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {visas.map((visa) => (
-          <div key={visa._id} className="visa-card p-4 border rounded-lg shadow-lg">
+          <div
+            key={visa._id}
+            className="visa-card p-4 border rounded-lg shadow-lg"
+          >
             <img
               src={visa.countryImage}
               alt={visa.countryName}
@@ -98,7 +107,8 @@ const MyAddedVisa = () => {
               Visa Type: <span className="font-bold">{visa.visaType}</span>
             </p>
             <p className="text-lg font-semibold">
-              Processing Time: <span className="font-bold">{visa.processingTime}</span>
+              Processing Time:{" "}
+              <span className="font-bold">{visa.processingTime}</span>
             </p>
             <p className="text-lg font-semibold">
               Fee: <span className="font-bold">{visa.fee}</span>
@@ -107,7 +117,8 @@ const MyAddedVisa = () => {
               Validity: <span className="font-bold">{visa.validity}</span>
             </p>
             <p className="text-lg font-semibold">
-              Application Method: <span className="font-bold">{visa.applicationMethod}</span>
+              Application Method:{" "}
+              <span className="font-bold">{visa.applicationMethod}</span>
             </p>
             <div className="flex justify-between mt-4">
               <button
@@ -134,10 +145,17 @@ const MyAddedVisa = () => {
       {isModalOpen && (
         <dialog open className="modal">
           <div className="modal-box w-full max-w-5xl">
-            <form onSubmit={handleUpdateVisa} className="modal-box w-full max-w-5xl">
-              <h3 className="font-bold text-lg mb-4">Update Visa Information</h3>
+            <form
+              onSubmit={handleUpdateVisa}
+              className="modal-box w-full max-w-5xl"
+            >
+              <h3 className="font-bold text-lg mb-4">
+                Update Visa Information
+              </h3>
               <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Country Image URL</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Country Image URL
+                </label>
                 <input
                   type="text"
                   defaultValue={selectedVisa.countryImage}
@@ -146,7 +164,9 @@ const MyAddedVisa = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Country Name</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Country Name
+                </label>
                 <input
                   type="text"
                   defaultValue={selectedVisa.countryName}
@@ -155,7 +175,9 @@ const MyAddedVisa = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Visa Type</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Visa Type
+                </label>
                 <input
                   type="text"
                   defaultValue={selectedVisa.visaType}
@@ -164,7 +186,9 @@ const MyAddedVisa = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Processing Time</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Processing Time
+                </label>
                 <input
                   type="text"
                   defaultValue={selectedVisa.processingTime}
@@ -182,7 +206,9 @@ const MyAddedVisa = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Validity</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Validity
+                </label>
                 <input
                   type="text"
                   defaultValue={selectedVisa.validity}
@@ -191,7 +217,9 @@ const MyAddedVisa = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Application Method</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Application Method
+                </label>
                 <input
                   type="text"
                   defaultValue={selectedVisa.applicationMethod}
@@ -200,7 +228,9 @@ const MyAddedVisa = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2">Your Email</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Your Email
+                </label>
                 <input
                   type="text"
                   defaultValue={selectedVisa.email}

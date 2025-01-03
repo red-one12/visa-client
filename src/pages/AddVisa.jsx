@@ -1,12 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../provider/AuthProvider';
-import Swal from 'sweetalert2';
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const AddVisa = () => {
-  const visaTypes = ['Tourist visa', 'Student visa', 'Official visa'];
-  const documents = ['Valid passport', 'Visa application form', 'Recent passport-sized photograph'];
+  const visaTypes = ["Tourist visa", "Student visa", "Official visa"];
+  const documents = [
+    "Valid passport",
+    "Visa application form",
+    "Recent passport-sized photograph",
+  ];
 
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,33 +44,30 @@ const AddVisa = () => {
       fee,
       validity,
       applicationMethod,
-      email
+      email,
     };
 
     console.log(newVisa);
 
-
-    fetch('http://localhost:5000/visa', {
-      method: 'POST',
+    fetch("https://visa-server-chi.vercel.app/visa", {
+      method: "POST",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
-      body: JSON.stringify(newVisa)
+      body: JSON.stringify(newVisa),
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      if(data.insertedId){
-        Swal.fire({
-          title: "Visa Added!!!",
-          icon: "success",
-          draggable: true
-        });
-        form.reset();
-      }
-    })
-
-
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Visa Added!!!",
+            icon: "success",
+            draggable: true,
+          });
+          form.reset();
+        }
+      });
   };
 
   return (
@@ -74,7 +75,12 @@ const AddVisa = () => {
       <h2 className="text-5xl font-bold mb-6 text-center">Add Visa</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="countryImage" className="block text-sm font-medium text-gray-700">Country Image (URL)</label>
+          <label
+            htmlFor="countryImage"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Country Image (URL)
+          </label>
           <input
             type="text"
             name="countryImage"
@@ -83,7 +89,9 @@ const AddVisa = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Country Name</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Country Name
+          </label>
           <input
             type="text"
             name="countryName"
@@ -92,19 +100,25 @@ const AddVisa = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Visa Type</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Visa Type
+          </label>
           <select
             name="visaType"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           >
             <option value="">Select Visa Type</option>
             {visaTypes.map((type) => (
-              <option key={type} value={type}>{type}</option>
+              <option key={type} value={type}>
+                {type}
+              </option>
             ))}
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Processing Time</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Processing Time
+          </label>
           <input
             type="text"
             name="processingTime"
@@ -113,7 +127,9 @@ const AddVisa = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Required Documents</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Required Documents
+          </label>
           {documents.map((doc) => (
             <div key={doc} className="mt-1 flex items-center">
               <input
@@ -127,7 +143,9 @@ const AddVisa = () => {
           ))}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
           <textarea
             name="description"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -135,7 +153,9 @@ const AddVisa = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Age Restriction</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Age Restriction
+          </label>
           <input
             type="number"
             name="ageRestriction"
@@ -153,7 +173,9 @@ const AddVisa = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Validity</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Validity
+          </label>
           <input
             type="text"
             name="validity"
@@ -162,7 +184,9 @@ const AddVisa = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Application Method</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Application Method
+          </label>
           <input
             type="text"
             name="applicationMethod"
@@ -171,7 +195,9 @@ const AddVisa = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Email</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
           <input
             type="text"
             name="email"
@@ -181,7 +207,9 @@ const AddVisa = () => {
           />
         </div>
         <div>
-          <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add Visa</button>
+          <button className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Add Visa
+          </button>
         </div>
       </form>
     </div>

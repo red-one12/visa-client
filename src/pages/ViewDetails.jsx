@@ -21,9 +21,7 @@ const ViewDetails = () => {
     applicationMethod,
   } = singleVisa;
 
-
   console.log(visaType);
-  
 
   const currentDate = new Date().toISOString().split("T")[0];
 
@@ -37,15 +35,24 @@ const ViewDetails = () => {
     const fee = form.fee.value;
     const date = form.date.value;
 
-    const newApplication = { email, firstName, lastName, fee, date, countryName, countryImage, visaType,
+    const newApplication = {
+      email,
+      firstName,
+      lastName,
+      fee,
+      date,
+      countryName,
+      countryImage,
+      visaType,
       processingTime,
       requiredDocuments,
       description,
       ageRestriction,
       validity,
-      applicationMethod };
+      applicationMethod,
+    };
 
-    fetch("http://localhost:5000/application", {
+    fetch("https://visa-server-chi.vercel.app/application", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -55,14 +62,13 @@ const ViewDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.insertedId) {
-          
           setIsModalOpen(false);
 
           Swal.fire({
-                    title: "Successfully Applied!!!",
-                    icon: "success",
-                    draggable: true
-                  });
+            title: "Successfully Applied!!!",
+            icon: "success",
+            draggable: true,
+          });
         }
       })
       .catch((err) => {

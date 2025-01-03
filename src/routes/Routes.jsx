@@ -1,6 +1,4 @@
-import {
-  createBrowserRouter,
-} from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import MainLayout from "../MainLayout/MainLayout";
 
@@ -13,8 +11,6 @@ import MyAddedVisa from "../pages/MyAddedVisa";
 import MyVisaApplication from "../pages/MyVisaApplication";
 import ViewDetails from "../pages/ViewDetails";
 import ErrorPage from "../pages/ErrorPage";
-import LatestVisa from "../components/LatestVisa";
-
 
 
 const router = createBrowserRouter([
@@ -24,46 +20,45 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home></Home>,
-        loader: () => fetch('http://localhost:5000/visa')
+        loader: () => fetch("https://visa-server-chi.vercel.app/visa"),
       },
       {
-        path: '/allVisa',
+        path: "/allVisa",
         element: <AllVisa></AllVisa>,
-        loader: ()=> fetch('http://localhost:5000/visa')
+        loader: () => fetch("https://visa-server-chi.vercel.app/visa"),
       },
       {
-        path: '/addVisa',
-        element: <AddVisa></AddVisa>
+        path: "/addVisa",
+        element: <AddVisa></AddVisa>,
       },
       {
-        path: '/myAddedVisa',
+        path: "/myAddedVisa",
         element: <MyAddedVisa></MyAddedVisa>,
-        loader: () => fetch('http://localhost:5000/visa')
+        loader: () => fetch("https://visa-server-chi.vercel.app/visa"),
       },
       {
-        path: '/myVisaApplication',
+        path: "/myVisaApplication",
         element: <MyVisaApplication></MyVisaApplication>,
-        loader: ()=> fetch('http://localhost:5000/application'),
-      }
-
-    ]
+        loader: () => fetch("https://visa-server-chi.vercel.app/application"),
+      },
+    ],
   },
   {
-    path: '/login',
-    element: <Login></Login>
+    path: "/login",
+    element: <Login></Login>,
   },
   {
-    path: '/register',
-    element: <Register></Register>
+    path: "/register",
+    element: <Register></Register>,
   },
   {
-    path: '/viewDetails/:id',
+    path: "/viewDetails/:id",
     element: <ViewDetails></ViewDetails>,
-    loader: ({params}) => fetch(`http://localhost:5000/visa/${params.id}`)
-  }
+    loader: ({ params }) =>
+      fetch(`https://visa-server-chi.vercel.app/visa/${params.id}`),
+  },
 ]);
-
 
 export default router;

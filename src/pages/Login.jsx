@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import auth from '../firebase/firebase.init';
+import Swal from 'sweetalert2';
 
 const Login = () => {
   const { loginUser, setUser } = useContext(AuthContext);
@@ -18,10 +19,20 @@ const Login = () => {
     loginUser(email, password)
       .then(result => {
         setUser(result.user);
+        Swal.fire({
+          title: "Successfully Logged In!!!",
+          icon: "success",
+          draggable: true
+        });
         navigateToHome('/');
       })
       .catch(error => {
         console.log('Error', error);
+        Swal.fire({
+          title: "Invalid Credentials. Try again!!!",
+          icon: "error",
+          draggable: true
+        });
       });
   };
 

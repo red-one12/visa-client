@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const ViewDetails = () => {
   const singleVisa = useLoaderData();
@@ -54,8 +55,14 @@ const ViewDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.insertedId) {
-          alert("Application Successful!");
+          
           setIsModalOpen(false);
+
+          Swal.fire({
+                    title: "Successfully Applied!!!",
+                    icon: "success",
+                    draggable: true
+                  });
         }
       })
       .catch((err) => {

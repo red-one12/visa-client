@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const MyVisaApplication = () => {
   const userApplications = useLoaderData();
@@ -12,7 +13,7 @@ const MyVisaApplication = () => {
 
 
 
-  
+
   const [applications, setApplications] = useState(
     userApplications.filter((application) => application.email === user.email)
   );
@@ -25,8 +26,14 @@ const MyVisaApplication = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount > 0) {
-          alert('Application Deleted!');
+          
           setApplications(applications.filter((app) => app._id !== _id));
+
+          Swal.fire({
+                    title: "Application Cancel!!!",
+                    icon: "Error",
+                    draggable: true
+                  });
         }
       })
       .catch((error) => {

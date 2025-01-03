@@ -4,6 +4,7 @@ import { FaGoogle } from "react-icons/fa";
 import { GoogleAuthProvider, signInWithPopup, updateProfile } from "firebase/auth";
 import auth from "../firebase/firebase.init";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const navigateToHome = useNavigate();
@@ -19,6 +20,11 @@ const Register = () => {
         console.log(result.user);
         setUser(result.user);
         navigateToHome('/');
+        Swal.fire({
+          title: "Registration Complete!!!",
+          icon: "success",
+          draggable: true
+        });
         setIsManual(false);
       })
       .catch((error) => {
@@ -57,10 +63,20 @@ const Register = () => {
         }).then(() => {
           setUser(user);
           navigateToHome('/');
+          Swal.fire({
+              title: "Registration Complete!!!",
+              icon: "success",
+              draggable: true
+            });
         });
       })
       .catch((error) => {
         console.error('Error', error);
+        Swal.fire({
+                  title: "Invalid Information. Try again!!!",
+                  icon: "error",
+                  draggable: true
+                });
         setErrorMessage(error.message);
       });
   };
@@ -104,7 +120,7 @@ const Register = () => {
             </label>
             <input type="password" placeholder="password" name="password" className="input input-bordered" required />
           </div>
-          {errorMessage && <p className="text-red-500 text-[12px]">{errorMessage}</p>}
+          
           <div className="form-control mt-6">
             <button className="btn btn-primary">Register</button>
           </div>

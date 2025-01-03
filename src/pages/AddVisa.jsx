@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const AddVisa = () => {
   const visaTypes = ['Tourist visa', 'Student visa', 'Official visa'];
@@ -56,7 +57,12 @@ const AddVisa = () => {
     .then(data => {
       console.log(data);
       if(data.insertedId){
-        alert("successfully added");
+        Swal.fire({
+          title: "Visa Added!!!",
+          icon: "success",
+          draggable: true
+        });
+        form.reset();
       }
     })
 

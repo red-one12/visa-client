@@ -1,18 +1,26 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import { signOut } from "firebase/auth";
 import auth from "../firebase/firebase.init";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import Swal from 'sweetalert2'
 
 const Header = () => {
   const { user, setUser } = useContext(AuthContext);
+  const homeNavigate = useNavigate();
 
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
         setUser(null);
+        Swal.fire({
+          title: "Logout Successful!!!",
+          icon: "success",
+          draggable: true
+        });
+        homeNavigate('/');
       })
       .catch((error) => {
         console.error("Error logging out:", error);
@@ -133,15 +141,15 @@ const Header = () => {
                 <Tooltip id="user-tooltip" place="left" />
               </div>
             )}
-            <button onClick={handleLogout} className="btn mr-24">
+            <button onClick={handleLogout} className="btn mr-32">
               Logout
             </button>
           </div>
         ) : (
-          <>
+          <div className="mr-32 flex gap-5">
             <NavLink to="/login">Login</NavLink>
             <NavLink to="/register">Register</NavLink>
-          </>
+          </div>
         )}
       </div>
     </div>

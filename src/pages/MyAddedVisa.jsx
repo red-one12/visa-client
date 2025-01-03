@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const MyAddedVisa = () => {
   const userAddedVisa = useLoaderData();
@@ -47,6 +48,11 @@ const MyAddedVisa = () => {
       .then((data) => {
         setVisas(visas.map((visa) => (visa._id === selectedVisa._id ? { ...visa, ...updateVisa } : visa)));
         setIsModalOpen(false);
+        Swal.fire({
+                  title: "Successfully Updated!!!",
+                  icon: "success",
+                  draggable: true
+                });
       })
       .catch((error) => {
         console.error("Error updating visa:", error);
@@ -60,6 +66,11 @@ const MyAddedVisa = () => {
       .then((res) => res.json())
       .then((data) => {
         setVisas(visas.filter((visa) => visa._id !== id));
+        Swal.fire({
+                  title: "Visa Deleted!!!",
+                  icon: "success",
+                  draggable: true
+                });
       })
       .catch((error) => {
         console.error("Error deleting visa:", error);

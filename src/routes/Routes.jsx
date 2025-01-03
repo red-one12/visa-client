@@ -14,6 +14,7 @@ import MyVisaApplication from "../pages/MyVisaApplication";
 import ViewDetails from "../pages/ViewDetails";
 
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       {
         path: '/myVisaApplication',
         element: <MyVisaApplication></MyVisaApplication>,
-        loader: ()=> fetch('http://localhost:5000/application')
+        loader: ()=> fetch('http://localhost:5000/application'),
       }
 
     ]

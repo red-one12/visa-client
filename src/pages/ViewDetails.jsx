@@ -36,7 +36,13 @@ const ViewDetails = () => {
     const fee = form.fee.value;
     const date = form.date.value;
 
-    const newApplication = { email, firstName, lastName, fee, date };
+    const newApplication = { email, firstName, lastName, fee, date, countryName, countryImage, visaType,
+      processingTime,
+      requiredDocuments,
+      description,
+      ageRestriction,
+      validity,
+      applicationMethod };
 
     fetch("http://localhost:5000/application", {
       method: "POST",

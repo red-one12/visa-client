@@ -1,60 +1,94 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 
 const MyVisaApplication = () => {
-  const allVisaApplications = useLoaderData();
+  const userApplications = useLoaderData();
   const { user } = useContext(AuthContext);
-  const [myVisaApplications, setMyVisaApplications] = useState([]);
-  const navigate = useNavigate();
 
-  console.log(allVisaApplications);
-  
+  // State for managing the filtered applications
+  const [applications, setApplications] = useState(
+    userApplications.filter((application) => application.email === user.email)
+  );
 
-  useEffect(() => {
-    if (user) {
-      setMyVisaApplications(allVisaApplications.filter(visa => visa.email === user.email));
-    }
-  }, [user, allVisaApplications, navigate]);
-
-  const handleCancelApplication = (id) => {
-    fetch(`http://localhost:5000/visa/${id}`, {
+  const handleCancel = (_id) => {
+    fetch(`http://localhost:5000/application/${_id}`, {
       method: 'DELETE',
     })
-    .then(res => res.json())
-    .then(() => {
-      setMyVisaApplications(myVisaApplications.filter(visa => visa._id !== id));
-    })
-    .catch(error => console.error('Error cancelling visa application:', error));
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          alert('Application Deleted!');
+          // Remove the application from the state
+          setApplications(applications.filter((app) => app._id !== _id));
+        }
+      })
+      .catch((error) => {
+        console.error('Error deleting application:', error);
+      });
   };
-
-  if (!user) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-center text-3xl font-bold mb-6">
-        Total Applications of VISA: {myVisaApplications.length}
-      </h1>
+      <h1 className="text-2xl font-bold mb-4">My Visa Applications</h1>
+      {applications.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {applications.map((application) => (
+            <div
+              key={application._id}
+              className="border rounded-lg shadow-lg p-4 flex flex-col items-center"
+            >
+              {/* Country Image */}
+              <img
+                src={application.countryImage}
+                alt={application.countryName}
+                className="w-full h-40 object-cover rounded-md mb-4"
+              />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {myVisaApplications.map(visa => (
-          <div key={visa._id} className="visa-card p-4 border rounded-lg shadow-lg">
-            <img src={visa.countryImage} alt={visa.country} className="w-full h-32 object-cover mb-4 rounded-lg" />
-            <p className="text-lg font-semibold">Country: <span className="font-bold">{visa.countryName}</span></p>
-            <p className="text-lg font-semibold">Visa Type: <span className="font-bold">{visa.visaType}</span></p>
-            <p className="text-lg font-semibold">Processing Time: <span className="font-bold">{visa.processingTime}</span></p>
-            <p className="text-lg font-semibold">Fee: <span className="font-bold">{visa.fee}</span></p>
-            <p className="text-lg font-semibold">Validity: <span className="font-bold">{visa.validity}</span></p>
-            <p className="text-lg font-semibold">Application Method: <span className="font-bold">{visa.applicationMethod}</span></p>
-            <p className="text-lg font-semibold">Applied Date: <span className="font-bold">{visa.appliedDate}</span></p>
-            <p className="text-lg font-semibold">Applicant's Name: <span className="font-bold">{visa.firstName} {visa.lastName}</span></p>
-            <p className="text-lg font-semibold">Applicant’s Email: <span className="font-bold">{visa.email}</span></p>
-            <button onClick={() => handleCancelApplication(visa._id)} className="btn bg-red-500 text-white mt-4">Cancel</button>
-          </div>
-        ))}
-      </div>
+              {/* Country Name */}
+              <h2 className="text-xl font-semibold">{application.countryName}</h2>
+
+              {/* Visa Details */}
+              <p className="text-sm">
+                <strong>Visa Type:</strong> {application.visaType}
+              </p>
+              <p className="text-sm">
+                <strong>Processing Time:</strong> {application.processingTime}
+              </p>
+              <p className="text-sm">
+                <strong>Fee:</strong> {application.fee} USD
+              </p>
+              <p className="text-sm">
+                <strong>Validity:</strong> {application.validity}
+              </p>
+              <p className="text-sm">
+                <strong>Application Method:</strong> {application.applicationMethod}
+              </p>
+              <p className="text-sm">
+                <strong>Applied Date:</strong> {application.submissionDate}
+              </p>
+
+              {/* Applicant Details */}
+              <p className="text-sm">
+                <strong>Applicant:</strong> {application.firstName} {application.lastName}
+              </p>
+              <p className="text-sm">
+                <strong>Email:</strong> {application.email}
+              </p>
+
+              {/* Cancel Button */}
+              <button
+                className="bg-red-500 text-white py-2 px-4 mt-4 rounded-lg hover:bg-red-600"
+                onClick={() => handleCancel(application._id)}
+              >
+                Cancel
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-500">No applications found for your email.</p>
+      )}
     </div>
   );
 };

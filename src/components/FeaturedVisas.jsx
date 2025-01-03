@@ -5,7 +5,10 @@ const FeaturedVisas = () => {
     <div className="mt-12">
       <h2 className="text-5xl font-bold text-center mb-8 text-blue-900">Featured Visas</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* Example Card */}
+      
+
+
+      
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <img className="w-full h-48 object-cover" src="https://i.ibb.co.com/hB8N9Lg/Vocab-Bee-2.png" alt="Featured Visa" />
           <div className="p-4">

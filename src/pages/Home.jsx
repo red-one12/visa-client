@@ -3,10 +3,11 @@ import FeaturedVisas from "../components/FeaturedVisas";
 import LatestVisa from "../components/LatestVisa";
 import VisaApplicationProcess from "../components/VisaApplicationProcess";
 import { Typewriter } from "react-simple-typewriter";
+import { useLoaderData } from "react-router-dom";
 
 const Home = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
+  const visaData = useLoaderData();
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -139,7 +140,7 @@ const Home = () => {
 
 
       <div>
-        <LatestVisa />
+        <LatestVisa visaData={visaData} />
       </div>
       <div>
         <FeaturedVisas />

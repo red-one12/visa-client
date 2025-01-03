@@ -13,6 +13,7 @@ import MyAddedVisa from "../pages/MyAddedVisa";
 import MyVisaApplication from "../pages/MyVisaApplication";
 import ViewDetails from "../pages/ViewDetails";
 import ErrorPage from "../pages/ErrorPage";
+import LatestVisa from "../components/LatestVisa";
 
 
 
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home></Home>
+        element: <Home></Home>,
+        loader: () => fetch('http://localhost:5000/visa')
       },
       {
         path: '/allVisa',

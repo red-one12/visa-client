@@ -1,11 +1,11 @@
-# LMS 🚀
+# VISA 🚀
 
 
 
 ![image alt](https://github.com/red-one12/LMS-client/blob/a929b3768a185faabacd254256909a066a681d72/Screenshot%20(8).png)
 
 
-The Library Management System project is a website where users can browse, borrow, and return books. Users can log in or register to access private features, like adding and updating books. The site will be mobile-friendly and secure, with features like book filters, dynamic titles, and notifications for actions. Technologies like React, MongoDB, Firebase, and JWT will be used for building the system.
+A visa management app where users can view, apply for, and cancel their visa applications. Only authenticated users can access their applications. Users can easily manage their visa details through a simple and secure interface.
 
 🔗 **Live Demo**: [LMS](https://lm-system-348d1.web.app/)
 

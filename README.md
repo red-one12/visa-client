@@ -1,21 +1,59 @@
-
-# Visa
-Link of live site:https://visa-1a4d7.web.app/
-
-# Purpose
-The purpose of this project is to create a visa management platform where users can explore visa options, understand the application process, and access key features like dark mode for a better user experience.
-
-# Key Features
-1. **Visa Exploration**: View detailed visa options and requirements.  
-2. **Application Management**: Add, track, and manage visa applications.  
-3. **User Authentication**: Secure login and personalized dashboard.  
-4. **Dark Mode**: Switch between light and dark themes.  
-5. **Responsive Design**: Optimized for all devices.
-
-# NPM Package That I have use
-**react-simple-typewriter:** For showing typeing animations.
-**react-tooltip:** For showing data by hover effect.
+# LMS 🚀
 
 
 
+![image alt](https://github.com/red-one12/LMS-client/blob/a929b3768a185faabacd254256909a066a681d72/Screenshot%20(8).png)
 
+
+The Library Management System project is a website where users can browse, borrow, and return books. Users can log in or register to access private features, like adding and updating books. The site will be mobile-friendly and secure, with features like book filters, dynamic titles, and notifications for actions. Technologies like React, MongoDB, Firebase, and JWT will be used for building the system.
+
+🔗 **Live Demo**: [LMS](https://lm-system-348d1.web.app/)
+
+---
+
+## 📌 Features
+
+- **User Authentication**: Login and register with email/password or social login (Google/GitHub).
+- **Book Management**: Browse, add, update, and view books by category.
+- **Borrowing System**: Borrow and return books with automatic quantity updates.
+- **Private Routes**: Restricted pages for logged-in users (e.g., Borrowed Books, Add Book).
+- **Responsive Design**: Mobile-friendly layout.
+- **Notifications**: Toast messages for actions like adding books or borrowing.
+- **Book Filters**: Filter books by availability and toggle views (card or table).
+
+---
+
+## 🛠 Tech Stack
+
+**Frontend**: React, Tailwind CSS  
+**Backend**: Node.js, Express  
+**Database**: MongoDB  
+**Authentication**: Firebase (Email/Google sign-in)  
+
+---
+
+## 📦 Dependencies
+
+### **Frontend**
+- React
+- React Router
+- Tailwind CSS
+- Firebase Authentication
+
+### **Backend**
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- Firebase Admin SDK
+
+---
+
+## 🏗 Installation & Setup
+
+Follow these steps to run the project locally:
+
+### 1️⃣ Clone the repository
+```sh
+git clone https://github.com/your-repo/lms.git
+cd lms
